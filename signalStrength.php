@@ -46,7 +46,7 @@ $droid->batteryStopMonitoring();
 notify(MY_NAME, 'Signal Strength checker exiting. Battery level is ' . $battery['result'] . '%');
 
 function notify($title, $message) {
-	global $droid, $battery;
+	global $droid;
 
 	echo "\n$message";
 	$droid->vibrate();
