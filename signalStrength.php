@@ -2,7 +2,7 @@
 require_once("Android.php");
 
 define('MY_NAME', 'Signal Strength Checker');
-define('MIN_BATTERY_LEVEL', 80);
+define('MIN_BATTERY_LEVEL', 15);
 
 $droid = new Android();
 $droid->startTrackingSignalStrengths();
@@ -43,7 +43,7 @@ while ($run) {
 }
 $droid->stopTrackingSignalStrengths();
 $droid->batteryStopMonitoring();
-notify(MY_NAME, 'Exiting because battery level is ' . $battery . '%');
+notify(MY_NAME, 'Signal Strength checker exiting. Battery level is ' . $battery['result'] . '%');
 
 function notify($title, $message) {
 	global $droid, $battery;
@@ -52,6 +52,5 @@ function notify($title, $message) {
 	$droid->vibrate();
 	$droid->notify($title, $message);
 	$droid->ttsSpeak($message);
-	// $droid->ttsSpeak('battery level is ' . $battery);
 }
 ?>
