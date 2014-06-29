@@ -6,6 +6,12 @@ define('VERSION', '0.0.1');
 define('MIN_BATTERY_LEVEL', 15);
 define('MIN_GOOD_SIGNAL_STRENGTH', 7);
 
+define('BAD_SIGNAL_TITLE', 'Bad Signal');
+define('BAD_SIGNAL_MESSAGE', 'You are loosing network range');
+define('GOOD_SIGNAL_TITLE', 'Good Signal');
+define('GOOD_SIGNAL_MESSAGE', 'You regained good network range');
+define('LOW_BATTERY_MESSAGE', 'Signal Strength checker exiting. Battery level is ');
+
 $droid = new Android();
 $droid->startTrackingSignalStrengths();
 $droid->batteryStartMonitoring();
@@ -23,14 +29,14 @@ while ($run) {
 	if ($goodStrength && ($signalStrength <= MIN_GOOD_SIGNAL_STRENGTH )) {
 		$goodStrength = false;
 		$doNotify = true;
-		$title = 'Bad Signal :(';
-		$message = 'You are loosing network range.';
+		$title = BAD_SIGNAL_TITLE;
+		$message = BAD_SIGNAL_MESSAGE;
 	}
 	else if (!$goodStrength && ($signalStrength > MIN_GOOD_SIGNAL_STRENGTH )) {
 		$goodStrength = true;
 		$doNotify = true;
-		$title = 'Good Signal :)';
-		$message = 'You regained good network range.';
+		$title = GOOD_SIGNAL_TITLE;
+		$message = GOOD_SIGNAL_MESSAGE;
 	}
 
 	if ($doNotify) {
@@ -45,7 +51,7 @@ while ($run) {
 }
 $droid->stopTrackingSignalStrengths();
 $droid->batteryStopMonitoring();
-notify(MY_NAME, 'Signal Strength checker exiting. Battery level is ' . $battery['result'] . '%');
+notify(MY_NAME, LOW_BATTERY_MESSAGE . $battery['result'] . '%');
 
 /**
  * function to notify user
