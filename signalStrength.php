@@ -66,11 +66,9 @@ function notify($title, $message) {
 	echo "\n$message";
 	$droid->notify($title, $message);
 
-	if ($droid->getVibrateMode()) {
-		$droid->vibrate();
-	}
+	$droid->vibrate();
 
-	if ($droid->checkRingerSilentMode()) {
+	if (!$droid->checkRingerSilentMode()) {
 		$droid->ttsSpeak($message);
 	}
 }
