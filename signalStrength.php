@@ -3,6 +3,7 @@ require_once("Android.php");
 
 define('MY_NAME', 'Signal Strength Checker');
 define('MIN_BATTERY_LEVEL', 15);
+define('MIN_GOOD_SIGNAL_STRENGTH', 7);
 
 $droid = new Android();
 $droid->startTrackingSignalStrengths();
@@ -18,13 +19,13 @@ while ($run) {
 	$signal = $droid->readSignalStrengths();
 	$signalStrength = $signal['result']->gsm_signal_strength;
 
-	if ($goodStrength && ($signalStrength < 7)) {
+	if ($goodStrength && ($signalStrength <= MIN_GOOD_SIGNAL_STRENGTH )) {
 		$goodStrength = false;
 		$doNotify = true;
 		$title = 'Bad Signal :(';
 		$message = 'You are loosing network range.';
 	}
-	else if (!$goodStrength && ($signalStrength >= 7)) {
+	else if (!$goodStrength && ($signalStrength > MIN_GOOD_SIGNAL_STRENGTH )) {
 		$goodStrength = true;
 		$doNotify = true;
 		$title = 'Good Signal :)';
@@ -45,6 +46,13 @@ $droid->stopTrackingSignalStrengths();
 $droid->batteryStopMonitoring();
 notify(MY_NAME, 'Signal Strength checker exiting. Battery level is ' . $battery['result'] . '%');
 
+/**
+ * function to notify user
+ * 
+ * @param $title String title of notification
+ * @param $message String message to be shown in notification
+ * @return none
+ */
 function notify($title, $message) {
 	global $droid;
 
