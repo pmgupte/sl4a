@@ -2,6 +2,7 @@
 require_once("Android.php");
 
 define('MY_NAME', 'Signal Strength Checker');
+define('VERSION', '0.0.1');
 define('MIN_BATTERY_LEVEL', 15);
 define('MIN_GOOD_SIGNAL_STRENGTH', 7);
 
