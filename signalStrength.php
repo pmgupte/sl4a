@@ -6,10 +6,10 @@ define('VERSION', '0.0.1');
 define('MIN_BATTERY_LEVEL', 15);
 define('MIN_GOOD_SIGNAL_STRENGTH', 7);
 
-define('BAD_SIGNAL_TITLE', 'Bad Signal');
-define('BAD_SIGNAL_MESSAGE', 'You are loosing network range');
-define('GOOD_SIGNAL_TITLE', 'Good Signal');
-define('GOOD_SIGNAL_MESSAGE', 'You regained good network range');
+define('BAD_SIGNAL_TITLE', 'Range Lost');
+define('BAD_SIGNAL_MESSAGE', 'Callable range lost');
+define('GOOD_SIGNAL_TITLE', 'Range Found');
+define('GOOD_SIGNAL_MESSAGE', 'Back in callable range');
 define('LOW_BATTERY_MESSAGE', 'Signal Strength checker exiting. Battery level is ');
 
 $droid = new Android();
@@ -40,7 +40,7 @@ while ($run) {
 	}
 
 	if ($doNotify) {
-		notify($title . " [$signalStrength]", $message);
+		notify($title, $message);
 		$doNotify = false;
 	}
 
@@ -67,9 +67,10 @@ function notify($title, $message) {
 	$droid->notify($title, $message);
 
 	$droid->vibrate();
+	$silentMode = $droid->checkRingerSilentMode();
 
-	if (!$droid->checkRingerSilentMode()) {
-		$droid->ttsSpeak($message);
+	if (!$silentMode['result']) {
+		$droid->ttsSpeak($title);
 	}
 }
 ?>
