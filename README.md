@@ -10,4 +10,4 @@ SL4A R4 https://android-scripting.googlecode.com/files/sl4a_r4.apk - currently, 
 
 PHP for Android http://phpforandroid.net/files/PhpForAndroid_r1.apk
 
-API Reference https://code.google.com/p/android-scripting/wiki/ApiReference
+API Reference https://github.com/damonkohler/sl4a/blob/wiki/ApiReference.md
